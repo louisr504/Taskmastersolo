@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
+    <title>Band Together</title>
+</head>
+<body>
+    <div class="container-fluid">
+        <div class="row">
+            <div class="col-10">
+                <h1>Hi, {{user.first_name}}!!</h1>
+            </div>
+            <div class="col">
+            
+                <p class="text-end"><a href="/dashboard">Dashboard</a> <a href= "/logout">Logout</a></p>
+            </div>
+                <div class="container-fluid">
+                    <div class="row">
+                        <div class="col-8">
+                            <h3>ADD A TASK</h3>
+                        </div>
+        </div>
+        <form action="/tasks/add_to_db" method="POST">
+            {% with messages = get_flashed_messages() %}     
+                {% if messages %}                            
+                    {% for message in messages %}            
+                        <p>{{message}}</p>                   
+                    {% endfor %}
+                {% endif %}
+            {% endwith %}
+            
+            
+            <div>
+                <label>Job:</label>
+                <input type="text" name="job">
+            </div>
+            <div>
+                <label>Description:</label>
+                <input type="text" name="description">
+            </div>
+            <div>
+                <label>Area:</label>
+                <input type="text" name="area">
+            </div>
+            <input type = "submit" value="Create">
+        </form>
+    <h1></h1>
+</body>
+</html>

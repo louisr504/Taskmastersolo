@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Dashboard</title>
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
+</head>
+<body>
+
+    <h1 class="text-center">Hi {{user.first_name}}!</h1>
+<div class="text-center">
+    <a href="/logout"><button type="button" >Logout</button>
+    <a href="/task/new"><button type="button">New Task</button>
+</div>
+
+        <table class="table">
+            <thead>
+                <tr>
+                    <th>Job</th>
+                    <th>Area</th>
+                    <th>Actions</th>
+                    
+                </tr>
+            </thead>
+            <tbody>
+                {% for this_task in all_tasks %}
+                <tr>
+                    <td>{{this_task.job}}</td>
+                    <td>{{this_task.area}}</td>
+                    <td>
+                        <a href="/tasks/{{this_task.id}}">View</a>
+                        {% if user.id == this_task.creator.id %}
+                        <a href="/tasks/{{this_task.id}}/edit">Edit</a>
+                        <a href="/tasks/{{this_task.id}}/delete">Delete</a>
+                        {% endif %}
+                    </td>
+                </tr>
+                {% endfor %}    
+            </tbody>
+        </table>
+
+</body>
+</html>
