@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
+    <title>Edit A Task</title>
+    <link rel="stylesheet" href="static/style.css">
+</head>
+<body>
+    <div class="nav">
+        <h1 class="nav-title">Dojo Theatres</h1>
+    </div>
+    <h1 class="text-center">Hi!</h1>
+    <div class="text-center">
+        <a href="/logout"><button type="button"  class="btn btn-primary" >Logout</button>
+        <a href="/task/new"><button type="button"  class="btn btn-primary">New Task</button>
+        <a href="/dashboard"><button type="button"  class="btn btn-primary">Dashboard</button></a>
+    </div>
+    <figure class="text-center">
+        <h3>EDIT A TASK</h3>
+        </div>
+        </div>
+        <form action="/tasks/{{this_task.id}}/edit_to_db" method="POST">
+            {% with messages = get_flashed_messages() %}     
+                {% if messages %}                            
+                    {% for message in messages %}            
+                        <p>{{message}}</p>                   
+                    {% endfor %}
+                {% endif %}
+            {% endwith %}
+            
+            
+            <div>
+                <label>Job:</label>
+                <input type="text" name="job" value = "{{this_task.job}}">
+            </div>
+            <div>
+                <label>Description:</label>
+                <textarea name="description">{{this_task.description}}</textarea>
+            </div>
+            <div>
+                <label>Area:</label>
+                <input type="text" name="area" value = "{{this_task.area}}">
+            </div>
+            <input type = "submit" value="Edit" class="btn btn-danger">
+        </form>
+    </figure>
+</body>
+</html>

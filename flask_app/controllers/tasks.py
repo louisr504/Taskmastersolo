@@ -22,30 +22,40 @@ def new_task_page():
 # edit task form
 
 
-@app.route("/task/<int:id>/edit")
+@app.route("/tasks/<int:id>/edit")
 def edit_task_page(id):
     if "user_id" not in session:  # if not logged in, you can not access route
         return redirect("/")
-    return render_template("edittask.html")
+    data = {
+        "id": id,
+    }
+    return render_template("edittask.html", this_task=task.Task.grab_one_task_with_creator(data))
 
 # view task
 
 
-@app.route("/task/<int:id>")
+@app.route("/tasks/<int:id>")
 def view_task_page(id):
     if "user_id" not in session:  # if not logged in, you can not access route
         return redirect("/")
-    return render_template("viewtask.html")
+    data = {
+        "id": id,
+    }
+    return render_template("viewtask.html", this_task=task.Task.grab_one_task_with_creator(data))
 
 # Invisible Routes
 
 
 # delete a task
-@app.route("/tasks/<int:id>/deletetask")
+@app.route("/tasks/<int:id>/delete")
 def delete_task(id):
     if "user_id" not in session:  # if not logged in, you can not access route
         return redirect("/")
-    pass
+    data = {
+        "id": id
+    }
+    task.Task.delete_task(data)
+    return redirect("/dashboard")
 
 
 # add a task to DB (POST METHOD)
@@ -71,9 +81,20 @@ def add_task_to_db():
 
 # edit a task to DB (POST METHOD)
 
-
 @app.route("/tasks/<int:id>/edit_to_db", methods=["POST"])
 def edit_task_to_db(id):
     if "user_id" not in session:  # if not logged in, you can not access route
         return redirect("/")
-    pass
+    # Validate the task
+    if not task.Task.validate_task(request.form):
+        return redirect(f"/tasks/{id}/edit")
+    else:
+        # communicate with model and add task to db
+        data = {
+            "job": request.form["job"],
+            "description": request.form["description"],
+            "area": request.form["area"],
+            "id": id
+        }
+        task.Task.edit_task(data)
+        return redirect("/dashboard")

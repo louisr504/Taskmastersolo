@@ -50,6 +50,41 @@ class Task:
                 all_task_instances.append(this_task_instance)
             return all_task_instances
 
+    # Grap one tasks with user who added it
+    @classmethod
+    def grab_one_task_with_creator(cls, data):
+        query = "SELECT * FROM tasks JOIN users ON tasks.user_id = users.id WHERE tasks.id = %(id)s;"
+        results = connectToMySQL(cls.db).query_db(query, data)
+        if len(results) == 0:
+            return None
+        else:
+            # Create a task
+            this_task_instance = cls(results[0])
+            # create a user
+            this_user_dictionary = {
+                "id": results[0]["users.id"],
+                "first_name": results[0]["first_name"],
+                "last_name": results[0]["last_name"],
+                "email": results[0]["email"],
+                "password": results[0]["password"],
+                "created_at": results[0]["users.created_at"],
+                "updated_at": results[0]["users.updated_at"],
+            }
+            this_user_instance = User(this_user_dictionary)
+            # link the user to task
+            this_task_instance.creator = this_user_instance
+            return this_task_instance
+
+    @classmethod
+    def edit_task(cls, data):
+        query = "UPDATE tasks SET job = %(job)s, description = %(description)s, area = %(area)s WHERE id = %(id)s; "
+        return connectToMySQL(cls.db).query_db(query, data)
+
+    @classmethod
+    def delete_task(cls, data):
+        query = "DELETE FROM tasks WHERE id = %(id)s;"
+        return connectToMySQL(cls.db).query_db(query, data)
+
     @staticmethod
     def validate_task(form_data):
         is_valid = True

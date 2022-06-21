@@ -4,24 +4,23 @@
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="static/style.css">
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
-    <title>Band Together</title>
+    <title>Add a Task</title>
 </head>
 <body>
-    <div class="container-fluid">
-        <div class="row">
-            <div class="col-10">
-                <h1>Hi, {{user.first_name}}!!</h1>
-            </div>
-            <div class="col">
-            
-                <p class="text-end"><a href="/dashboard">Dashboard</a> <a href= "/logout">Logout</a></p>
-            </div>
-                <div class="container-fluid">
-                    <div class="row">
-                        <div class="col-8">
-                            <h3>ADD A TASK</h3>
-                        </div>
+    <div class="nav">
+        <h1 class="nav-title">Dojo Theatres</h1>
+    </div>
+    <h1 class="text-center">Hi, {{user.first_name}}!!</h1>
+    <div class="text-center">
+        <a href="/logout"><button type="button" class="btn btn-primary" >Logout</button>
+        <a href="/task/new"><button type="button" class="btn btn-primary" >New Task</button>
+        <a href="/dashboard"><button type="button" class="btn btn-primary">Dashboard</button></a>
+    </div>
+        <figure class="text-center">
+        <h3>ADD A TASK</h3>
+    </div>
         </div>
         <form action="/tasks/add_to_db" method="POST">
             {% with messages = get_flashed_messages() %}     
@@ -39,14 +38,15 @@
             </div>
             <div>
                 <label>Description:</label>
-                <input type="text" name="description">
+                <textarea name="description"></textarea>
             </div>
             <div>
                 <label>Area:</label>
                 <input type="text" name="area">
             </div>
-            <input type = "submit" value="Create">
+            <input type = "submit" value="Create" class="btn btn-success">
         </form>
+        </figure>
     <h1></h1>
 </body>
 </html>
